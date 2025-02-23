@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -8,8 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 interface DeleteAlertProps {
   taskId: string;
@@ -17,7 +17,11 @@ interface DeleteAlertProps {
   onClose: () => void;
 }
 
-export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProps) {
+export default function DeleteAlert({
+  isOpen,
+  taskId,
+  onClose,
+}: DeleteAlertProps) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -25,7 +29,7 @@ export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProp
   const handleDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/tasks/${taskId}`, { method: "DELETE" })
+      await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
       router.push('/tasks');
       router.refresh();
       toast.success('Task deleted successfully.');
@@ -35,7 +39,7 @@ export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProp
       setLoading(false);
       onClose();
     }
-  }
+  };
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
@@ -43,15 +47,12 @@ export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProp
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your task.
+            This action cannot be undone. This will permanently delete your
+            task.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button
-            variant="outline"
-            disabled={loading}
-            onClick={onClose}
-          >
+          <Button variant="outline" disabled={loading} onClick={onClose}>
             Cancel
           </Button>
           <Button
@@ -64,5 +65,5 @@ export default function DeleteAlert({ isOpen, taskId, onClose }: DeleteAlertProp
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import Link from "next/link"
+import Link from 'next/link';
 
-import { ArrowRight, Home, ListTodo } from "lucide-react";
+import { ArrowRight, Home, ListTodo } from 'lucide-react';
 
 import { currentUser, UserButton } from '@clerk/nextjs';
 
@@ -17,7 +17,10 @@ export default async function Header() {
       <nav>
         <ul className="flex items-center gap-7">
           <li>
-            <Link className="flex items-center gap-1 font-semibold rounded-lg hover:underline" href="/">
+            <Link
+              className="flex items-center gap-1 font-semibold rounded-lg hover:underline"
+              href="/"
+            >
               <Home className="w-4 h-4" />
               Home
             </Link>
@@ -27,12 +30,13 @@ export default async function Header() {
               <li>
                 <Link
                   className="flex items-center gap-1 font-semibold rounded-lg hover:underline"
-                  href="/tasks">
+                  href="/tasks"
+                >
                   <ListTodo className="w-5 h-5" />
                   Tasks
                 </Link>
               </li>
-              <UserButton afterSignOutUrl='/' />
+              <UserButton afterSignOutUrl="/" />
             </>
           ) : (
             <>
@@ -48,5 +52,5 @@ export default async function Header() {
         </ul>
       </nav>
     </header>
-  )
+  );
 }

@@ -24,5 +24,5 @@ export default function Footer() {
         <ArrowUpRight className="w-4 h-4" />
       </Link>
     </footer>
-  )
+  );
 }

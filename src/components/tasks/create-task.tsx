@@ -1,21 +1,18 @@
-"use client"
+'use client';
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import {
-  PlusIcon,
-  Loader2
-} from "lucide-react"
+import { PlusIcon, Loader2 } from 'lucide-react';
 
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import Tiptap from "@/components/editor/tiptap"
-import { Button } from "@/components/ui/button";
+import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import Tiptap from '@/components/editor/tiptap';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -23,14 +20,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 
 import {
   Dialog,
@@ -40,18 +37,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog';
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
+    message: 'Title must be at least 2 characters.',
   }),
-  description: z.string()
-    .min(10, {
-      message: "Description must be at least 10 characters.",
-    }),
+  description: z.string().min(10, {
+    message: 'Description must be at least 10 characters.',
+  }),
   priority: z.string({
-    required_error: "Select the task priority",
+    required_error: 'Select the task priority',
   }),
   status: z.string(),
 });
@@ -65,10 +61,10 @@ export default function CreateTask() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      priority: "medium",
-      status: "todo",
+      title: '',
+      description: '',
+      priority: 'medium',
+      status: 'todo',
     },
   });
 
@@ -76,13 +72,13 @@ export default function CreateTask() {
     try {
       setIsLoading(true);
 
-      const res = await fetch("/api/tasks", {
-        method: "POST",
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
         body: JSON.stringify(values),
         headers: {
-          "Content-Type": "application/json",
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      });
 
       const data = await res.json();
 
@@ -126,11 +122,7 @@ export default function CreateTask() {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Title"
-                        type="text"
-                        {...field}
-                      />
+                      <Input placeholder="Title" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,21 +169,25 @@ export default function CreateTask() {
             />
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="ghost" disabled={isLoading} className="hover:text-red-500">
+                <Button
+                  variant="ghost"
+                  disabled={isLoading}
+                  className="hover:text-red-500"
+                >
                   Cancel
                 </Button>
               </DialogClose>
-              <Button
-                type="submit"
-                variant="outline"
-                disabled={isLoading}
-              >
-                {!isLoading ? "Submit" : <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" variant="outline" disabled={isLoading}>
+                {!isLoading ? (
+                  'Submit'
+                ) : (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

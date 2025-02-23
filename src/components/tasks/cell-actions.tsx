@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Task } from "@prisma/client";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { useState } from 'react';
+import { Task } from '@prisma/client';
+import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +10,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button";
-import EditTask from "@/components/tasks/edit-task";
-import DeleteAlert from "@/components/tasks/delete-task";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import EditTask from '@/components/tasks/edit-task';
+import DeleteAlert from '@/components/tasks/delete-task';
 
 interface CellActionProps {
-  data: Task
+  data: Task;
 }
 
 export default function CellAction({ data }: CellActionProps) {
@@ -56,5 +56,5 @@ export default function CellAction({ data }: CellActionProps) {
         onClose={() => setOpenDelete(false)}
       />
     </>
-  )
+  );
 }

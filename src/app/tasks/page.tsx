@@ -1,24 +1,24 @@
-import prisma from "@/lib/database"
+import prisma from '@/lib/database';
 
-import { auth } from "@clerk/nextjs";
+import { auth } from '@clerk/nextjs';
 
-import CreateTask from "@/components/tasks/create-task";
-import { columns } from "@/components/tasks/columns"
-import { DataTable } from "@/components/ui/data-table";
+import CreateTask from '@/components/tasks/create-task';
+import { columns } from '@/components/tasks/columns';
+import { DataTable } from '@/components/ui/data-table';
 
 const loadTasks = async () => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new Error("User ID is not available");
+    throw new Error('User ID is not available');
   }
 
   const tasks = await prisma.task.findMany({
-    where: { uid: userId }
+    where: { uid: userId },
   });
 
   return tasks;
-}
+};
 
 export default async function TasksPage() {
   const tasks = await loadTasks();
@@ -32,5 +32,5 @@ export default async function TasksPage() {
         <DataTable columns={columns} data={tasks} />
       </div>
     </>
-  )
+  );
 }

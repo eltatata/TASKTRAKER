@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from "@/components/theme-provider"
-import { dark } from "@clerk/themes";
-import Header from "@/components/header"
-import { Toaster } from "@/components/ui/sonner"
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ThemeProvider } from '@/components/theme-provider';
+import { dark } from '@clerk/themes';
+import Header from '@/components/header';
+import { Toaster } from '@/components/ui/sonner';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "TASKTRAKER",
-  description: "with TASKTRACKER create, review, update and delete your tasks",
+  title: 'TASKTRAKER',
+  description: 'with TASKTRACKER create, review, update and delete your tasks',
 };
 
 export default function RootLayout({
@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark
+        baseTheme: dark,
       }}
     >
-      <html lang="en" suppressHydrationWarning >
+      <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <ThemeProvider
             attribute="class"
@@ -35,11 +35,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
-            <Toaster
-              richColors
-              expand={true}
-              position="top-center"
-            />
+            <Toaster richColors expand={true} position="top-center" />
           </ThemeProvider>
         </body>
       </html>

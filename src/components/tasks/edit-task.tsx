@@ -1,28 +1,25 @@
-"use client"
+'use client';
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import { format } from "date-fns"
+import { format } from 'date-fns';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
-import { Task } from "@prisma/client"
+import { Task } from '@prisma/client';
 
-import {
-  Loader2,
-  CalendarIcon
-} from "lucide-react"
+import { Loader2, CalendarIcon } from 'lucide-react';
 
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import Tiptap from "@/components/editor/tiptap"
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar"
+import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import Tiptap from '@/components/editor/tiptap';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -30,19 +27,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from '@/components/ui/popover';
 import {
   Dialog,
   DialogClose,
@@ -50,30 +47,29 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog';
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
+    message: 'Title must be at least 2 characters.',
   }),
-  description: z.string()
-    .min(10, {
-      message: "Description must be at least 10 characters.",
-    }),
+  description: z.string().min(10, {
+    message: 'Description must be at least 10 characters.',
+  }),
   priority: z.string({
-    required_error: "Select the task priority",
+    required_error: 'Select the task priority',
   }),
   status: z.string({
-    required_error: "Select the task status",
+    required_error: 'Select the task status',
   }),
   startDate: z.date().optional().nullable(),
-  endDate: z.date().optional().nullable()
-})
+  endDate: z.date().optional().nullable(),
+});
 
 interface EditTaskProps {
-  isOpen: boolean
-  onClose: () => void
-  task: Task
+  isOpen: boolean;
+  onClose: () => void;
+  task: Task;
 }
 
 export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
@@ -98,18 +94,18 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
       setIsLoading(true);
 
       const res = await fetch(`/api/tasks/${task.id}`, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify(values),
         headers: {
-          "Content-Type": "application/json",
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      });
 
       const data = await res.json();
 
       if (res.ok) {
         toast.success(data.msg);
-        router.refresh()
+        router.refresh();
         onClose();
       } else {
         toast.error(data.msg);
@@ -141,11 +137,7 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                       <FormItem>
                         <FormLabel>Title</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Title"
-                            type="text"
-                            {...field}
-                          />
+                          <Input placeholder="Title" type="text" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -176,7 +168,10 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Priority</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select the task priority" />
@@ -198,7 +193,10 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Status</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select the task priority" />
@@ -206,7 +204,9 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="todo">Todo</SelectItem>
-                          <SelectItem value="in progress">In Progress</SelectItem>
+                          <SelectItem value="in progress">
+                            In Progress
+                          </SelectItem>
                           <SelectItem value="done">Done</SelectItem>
                         </SelectContent>
                       </Select>
@@ -224,14 +224,14 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                         <PopoverTrigger asChild className="rounded-xl">
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant={'outline'}
                               className={cn(
-                                "pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                'pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground',
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, 'PPP')
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -242,7 +242,11 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             mode="single"
-                            selected={field.value !== null && field.value !== undefined ? field.value : undefined}
+                            selected={
+                              field.value !== null && field.value !== undefined
+                                ? field.value
+                                : undefined
+                            }
                             onSelect={(date) => field.onChange(date || null)}
                             initialFocus
                           />
@@ -262,14 +266,14 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                         <PopoverTrigger asChild className="rounded-xl">
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant={'outline'}
                               className={cn(
-                                "pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                'pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground',
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, 'PPP')
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -280,7 +284,11 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             mode="single"
-                            selected={field.value !== null && field.value !== undefined ? field.value : undefined}
+                            selected={
+                              field.value !== null && field.value !== undefined
+                                ? field.value
+                                : undefined
+                            }
                             onSelect={(date) => field.onChange(date || null)}
                             initialFocus
                           />
@@ -294,21 +302,25 @@ export default function EditTask({ isOpen, onClose, task }: EditTaskProps) {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="ghost" disabled={isLoading} className="hover:text-red-500">
+                <Button
+                  variant="ghost"
+                  disabled={isLoading}
+                  className="hover:text-red-500"
+                >
                   Cancel
                 </Button>
               </DialogClose>
-              <Button
-                type="submit"
-                variant="outline"
-                disabled={isLoading}
-              >
-                {!isLoading ? "Submit" : <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" variant="outline" disabled={isLoading}>
+                {!isLoading ? (
+                  'Submit'
+                ) : (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
