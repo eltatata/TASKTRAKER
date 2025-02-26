@@ -16,11 +16,11 @@ export default function Home() {
           backgroundColor="black"
           className="flex items-center flex-col justify-center w-full h-full"
         >
-          <h2 className="text-7xl font-bold animate-fade animate-duration-[2000ms] animate-delay-[600ms]">
+          <h2 className="text-7xl font-bold animate-fade animate-duration-[500ms] animate-delay-[600ms]">
             TASKTRAKER
           </h2>
           <TextGenerateEffect words={words} />
-          <div className="pt-5 animate-fade animate-delay-[2000ms]">
+          <div className="pt-5 animate-fade animate-delay-[200ms]">
             <Link
               href="/tasks"
               className="flex items-center gap-1 p-3 rounded-md font-semibold text-[#8b5cf6] text-lg hover:underline bg-[#171717] hover:bg-[#262626] transition duration-200"
